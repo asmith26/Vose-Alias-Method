@@ -8,7 +8,7 @@ This code can be used to create (and efficiently sample from) a probability dist
 - Python versions 2.7+ (tested on Python 2.7.9 and Python 3.4.3)
 
 ##<a name="example-usage">Example Usage</a>
-To create a [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) and sample 10 words from this, run the main script with:
+To create a [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) for [Alice in Wonderland](http://www.gutenberg.org/cache/epub/11/pg11.txt) and sample 10 words from this, run the main script with options:
 ```python vose_sampler.py -p data/Alice.txt -n 10```
 
 Unit tests can be run via:

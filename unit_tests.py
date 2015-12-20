@@ -45,18 +45,20 @@ class TestValidation(unittest.TestCase):
         self.assertRaisesRegexp(SystemExit, binary_file_error, vose_sampler.get_words, invalid_folder + "zero.wav")
 
     def test_negative_integer(self):
-        """Test vose_sampler.ProbDistribution.alias_generation against a size
+        """Test vose_sampler.VoseAlias.alias_generation against a size
         specified by a negative integer. """
         words = vose_sampler.get_words(valid_folder + "small.txt")
-        WD = vose_sampler.ProbDistribution(words)
-        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "-1",  WD.sample, -1)
+	word_dist = vose_sampler.sample2dist(words)
+        VA_words = vose_sampler.VoseAlias(word_dist)
+        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
 
     def test_zero_integer(self):
         """Test vose_sampler.ProbDistribution.alias_generation against a size
         defined by zero. """
-        words = vose_sampler.get_words(valid_folder + "small.txt")
-        WD = vose_sampler.ProbDistribution(words)
-        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "0",  WD.sample, 0)
+	words = vose_sampler.get_words(valid_folder + "small.txt")
+        word_dist = vose_sampler.sample2dist(words)
+        VA_words = vose_sampler.VoseAlias(word_dist)
+        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
 
 
 class TestAccuracy(unittest.TestCase):
@@ -79,8 +81,9 @@ class TestAccuracy(unittest.TestCase):
     def test_output_create_dist(self):
         """Test vose_sampler.ProbDistribution.create_dist to ensure it correctly
         produces a uniform distribution for a list of words representing a standard die. """
-        WD = vose_sampler.ProbDistribution(["one","two","three","four","five","six"])
-        actual = WD.dist
+        numbers_dist = vose_sampler.sample2dist(["one","two","three","four","five","six"])
+        VA_numbers = vose_sampler.VoseAlias(numbers_dist)
+        actual = VA_numbers.dist
         prob = 1.0/6
         expected = {"one":prob, "two":prob, "three":prob, "four":prob, "five":prob, "six":prob}
         self.assertEqual(actual, expected)
@@ -99,20 +102,21 @@ class TestAccuracy(unittest.TestCase):
         implies we should expect a Type I error about 1% of the time).")
         
         # Construct a ProbDistribution
-        words = vose_sampler.get_words(valid_folder + "small.txt")
-        WD = vose_sampler.ProbDistribution(words)
+	words = vose_sampler.get_words(valid_folder + "small.txt")
+        word_dist = vose_sampler.sample2dist(words)
+        VA_words = vose_sampler.VoseAlias(word_dist)
 
         # Generate sample and calculate the number of observations for a randomly selected word
-        word = random.choice(list(WD.dist))
+        word = random.choice(list(VA_words.dist))
         n = 1000
 
         t = 0
         for i in range(n):
-            if WD.alias_generation() == word:
+            if VA_words.alias_generation() == word:
                 t += 1
 
         # Compute the p-value
-        p_original = WD.dist[word]
+        p_original = VA_words.dist[word]
 
         p_low = math.fsum([self.dbinom(x, n, p_original) for x in range(t,n+1)])
         p_high = math.fsum([self.dbinom(x, n, p_original) for x in range(t+1)])

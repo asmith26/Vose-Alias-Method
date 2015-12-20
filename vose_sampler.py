@@ -13,25 +13,16 @@ from optparse import OptionParser
 #import memory_profiler
 
 
-class ProbDistribution(object):
-    """ A probability distribution for discrete weighted random variables, described
-    by probability/alias tables for efficient sampling via Vose's Alias Method (a good
-    explanation of which can be found at http://www.keithschwarz.com/darts-dice-coins/).
+class VoseAlias(object):
+    """ A probability distribution for discrete weighted random variables and its probability/alias
+    tables for efficient sampling via Vose's Alias Method (a good explanation of which can be found at
+    http://www.keithschwarz.com/darts-dice-coins/).
     """
 
-    def __init__(self, event):
-        """ (ProbDistribution, list) -> NoneType """
-        self.create_dist(event)
+    def __init__(self, dist):
+        """ (ProbDistribution, dict) -> NoneType """
+        self.dist = dist
         self.alias_initialisation()
-
-    def create_dist(self, event):
-        """ Construct a distribution based on the observed event, {outcome:proportion}. """
-        increment = 1.0/len(event)
-
-        self.dist = {}
-        get = self.dist.get
-        for o in event: # o for outcome
-            self.dist[o] = get(o, 0) + increment
 
     def alias_initialisation(self):
         """ Construct probability and alias tables for the distribution. """
@@ -85,7 +76,7 @@ class ProbDistribution(object):
         else:
             return self.table_alias[col]
 
-    def sample(self, size):
+    def sample_n(self, size):
         """ Retrun a sample of size n from the distribution, and print the results to stdout. """
         # Ensure a non-negative integer as been specified
         n = int(size)
@@ -125,6 +116,17 @@ def get_words(file):
     except IOError as ioe:
         sys.exit("\nError: %s" % ioe)
 
+def sample2dist(sample):
+    """ (list) -> dict (i.e {outcome:proportion})
+    Construct a distribution based on an observed sample (e.g. rolls of a bias die) """
+    increment = 1.0/len(sample)
+
+    dist = {}
+    get = dist.get
+    for o in sample: # o for outcome
+        dist[o] = get(o, 0) + increment
+    return dist
+
 
 #COMMAND LINE HANDLING  (c.f. Speechmatics API)
 def check_required_arguments(opts, parser):
@@ -155,8 +157,9 @@ if __name__ == "__main__":
 
     # Construct distribution
     words = get_words(options.path)
-    word_dist = ProbDistribution(words)
+    word_dist = sample2dist(words)
+    VA_words = VoseAlias(word_dist)
 
     # Sample n words
-    word_dist.sample(options.n)
+    VA_words.sample(options.n)
     

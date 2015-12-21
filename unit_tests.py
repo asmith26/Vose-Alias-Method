@@ -7,6 +7,7 @@ import os
 import random
 import sys
 import unittest
+from decimal import *
 
 # Local application
 import vose_sampler
@@ -84,7 +85,7 @@ class TestAccuracy(unittest.TestCase):
         numbers_dist = vose_sampler.sample2dist(["one","two","three","four","five","six"])
         VA_numbers = vose_sampler.VoseAlias(numbers_dist)
         actual = VA_numbers.dist
-        prob = 1.0/6
+        prob = Decimal(1)/Decimal(6)
         expected = {"one":prob, "two":prob, "three":prob, "four":prob, "five":prob, "six":prob}
         self.assertEqual(actual, expected)
 
@@ -102,12 +103,13 @@ class TestAccuracy(unittest.TestCase):
         implies we should expect a Type I error about 1% of the time).")
         
         # Construct a ProbDistribution
-	words = vose_sampler.get_words(valid_folder + "small.txt")
+        words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
 
         # Generate sample and calculate the number of observations for a randomly selected word
         word = random.choice(list(VA_words.dist))
+
         n = 1000
 
         t = 0

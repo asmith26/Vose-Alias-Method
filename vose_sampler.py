@@ -6,6 +6,7 @@ import os
 import random
 import re
 import sys
+from decimal import *
 from optparse import OptionParser
 #import cProfile
 
@@ -38,7 +39,7 @@ class VoseAlias(object):
         for o, p in self.dist.items():
             scaled_prob[o] = p * n
 
-            if scaled_prob[o] < 1.0:
+            if scaled_prob[o] < 1:
                 small.append(o)
             else:
                 large.append(o)
@@ -51,19 +52,19 @@ class VoseAlias(object):
             self.table_prob[s] = scaled_prob[s]
             self.table_alias[s] = l
 
-            scaled_prob[l] = (scaled_prob[l] + scaled_prob[s]) - 1.0
+            scaled_prob[l] = (scaled_prob[l] + scaled_prob[s]) - Decimal(1)
 
-            if scaled_prob[l] < 1.0:
+            if scaled_prob[l] < 1:
                 small.append(l)
             else:
                 large.append(l)
 
         # The remaining outcomes (of one stack) must have probability 1
         while large:
-            self.table_prob[large.pop()] = 1.0
+            self.table_prob[large.pop()] = Decimal(1)
 
         while small:
-            self.table_prob[small.pop()] = 1.0
+            self.table_prob[small.pop()] = Decimal(1)
 
     def alias_generation(self):
         """ Return a random outcome from the distribution. """
@@ -119,7 +120,7 @@ def get_words(file):
 def sample2dist(sample):
     """ (list) -> dict (i.e {outcome:proportion})
     Construct a distribution based on an observed sample (e.g. rolls of a bias die) """
-    increment = 1.0/len(sample)
+    increment = Decimal(1)/len(sample)
 
     dist = {}
     get = dist.get
@@ -161,5 +162,5 @@ if __name__ == "__main__":
     VA_words = VoseAlias(word_dist)
 
     # Sample n words
-    VA_words.sample(options.n)
+    VA_words.sample_n(options.n)
     

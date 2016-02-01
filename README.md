@@ -5,7 +5,7 @@ This code can be used to create (and efficiently sample from) a probability dist
 
 ##<a name="depends-on">Depends on:</a>
 - The Python Standard Library, https://docs.python.org/2/library/
-- Python versions 2.7+ (tested on Python 2.7.9 and Python 3.4.3)
+- Python versions 2.7 (test on Python 2.7.11)
 
 ##<a name="example-usage">Example Usage</a>
 To create a [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) for [Alice in Wonderland](http://www.gutenberg.org/cache/epub/11/pg11.txt) and sample 10 words from this, run the main script with options:

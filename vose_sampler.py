@@ -163,4 +163,3 @@ if __name__ == "__main__":
 
     # Sample n words
     VA_words.sample_n(options.n)
-    

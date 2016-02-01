@@ -49,14 +49,14 @@ class TestValidation(unittest.TestCase):
         """Test vose_sampler.VoseAlias.alias_generation against a size
         specified by a negative integer. """
         words = vose_sampler.get_words(valid_folder + "small.txt")
-	word_dist = vose_sampler.sample2dist(words)
+        word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
         self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
 
     def test_zero_integer(self):
         """Test vose_sampler.ProbDistribution.alias_generation against a size
         defined by zero. """
-	words = vose_sampler.get_words(valid_folder + "small.txt")
+        words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
         self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
@@ -101,7 +101,7 @@ class TestAccuracy(unittest.TestCase):
         so it is likely to occasionally fail, nonetheless if the alias_generation\n\
         method is working correctly failures will be very rare (testing at alpha=0.01\n\
         implies we should expect a Type I error about 1% of the time).")
-        
+
         # Construct a ProbDistribution
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
@@ -122,7 +122,7 @@ class TestAccuracy(unittest.TestCase):
 
         p_low = math.fsum([self.dbinom(x, n, p_original) for x in range(t,n+1)])
         p_high = math.fsum([self.dbinom(x, n, p_original) for x in range(t+1)])
-        
+
         p = 2*min(p_low, p_high)
 
         # Do not accept H_0 if p <= alpha

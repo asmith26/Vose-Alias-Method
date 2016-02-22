@@ -21,7 +21,7 @@ class VoseAlias(object):
     """
 
     def __init__(self, dist):
-        """ (ProbDistribution, dict) -> NoneType """
+        """ (VoseAlias, dict) -> NoneType """
         self.dist = dist
         self.alias_initialisation()
 

@@ -3,6 +3,11 @@ Python implementation of Vose's alias method, an efficient algorithm for samplin
 
 For example, this code can be used for creating and efficiently sampling from a probability distribution representing rolling a weighted die (i.e where side j has probability P(j) of being rolled). Alternatively, it could be used for creating a simple [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) (see [example below](#unigram-usage))
 
+Unit tests can be run via:
+
+```$ python unit_tests.py```
+
+
 ##<a name="depends-on">Depends on:</a>
 - The Python Standard Library, https://docs.python.org/2/library/
 - Python versions 2.7 (tested on Python 2.7.11)
@@ -41,7 +46,3 @@ To create a [unigram language model](https://en.wikipedia.org/wiki/Language_mode
 [Note, this is intended to illustrate how Vose's alias method could be used. Thus I have not included any preprocessing steps that would make the language model more realistic; for example, we could add handling of upper vs. lower case words (so that e.g. "The" and "the" are not considered distinct), as well as handling of punctuation (e.g. so "the" and "the." are considered the same).
 
 Likewise, should the text(s) you wish to sample from be particularly large, you may wish to integrate my [Hadoop MapReduce job for counting the word frequencies of text file(s)](https://github.com/asmith26/python-mapreduce-examples/tree/master/word_frequencies).]
-
-Unit tests can be run via:
-
-```$ python unit_tests.py```

@@ -37,7 +37,7 @@ class VoseAlias(object):
 
         # Construct and sort the scaled probabilities into their appropriate stacks
         for o, p in self.dist.items():
-            scaled_prob[o] = p * n
+            scaled_prob[o] = Decimal(p) * n
 
             if scaled_prob[o] < 1:
                 small.append(o)

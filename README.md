@@ -1,4 +1,4 @@
-#Vose-Alias-Method
+# Vose-Alias-Method
 Python implementation of Vose's alias method, an efficient algorithm for sampling from a discrete probability distribution (a good explanation of which can be found at http://www.keithschwarz.com/darts-dice-coins/).
 
 For example, this code can be used for creating and efficiently sampling from a probability distribution representing rolling a weighted die (i.e where side j has probability P(j) of being rolled). Alternatively, it could be used for creating a simple [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) (see [example below](#unigram-usage))
@@ -8,11 +8,11 @@ Unit tests can be run via:
 ```$ python unit_tests.py```
 
 
-##<a name="depends-on">Depends on:</a>
+## <a name="depends-on">Depends on:</a>
 - The Python Standard Library, https://docs.python.org/2/library/
 - Python versions 2.7 (tested on Python 2.7.11)
 
-##<a name="example-usage">Example Usage</a>
+## <a name="example-usage">Example Usage</a>
 In a python shell:
 
 ```
@@ -38,7 +38,7 @@ T
 H
 ```
 
-###<a name="unigram-usage">Unigram language model example</a>
+### <a name="unigram-usage">Unigram language model example</a>
 To create a [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) for [Alice in Wonderland](http://www.gutenberg.org/cache/epub/11/pg11.txt) and sample 10 words from this, run the main script from the command line with options:
 
 ```$ python vose_sampler.py -p data/Alice.txt -n 10```

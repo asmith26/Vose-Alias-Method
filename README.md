@@ -10,7 +10,7 @@ Unit tests can be run via:
 
 ## <a name="depends-on">Depends on:</a>
 - The Python Standard Library, https://docs.python.org/2/library/
-- Python versions 2.7 (tested on Python 2.7.11)
+- Python versions 2.7, 3.6 (tested on Python 2.7.11, 3.6.6)
 
 ## <a name="example-usage">Example Usage</a>
 In a python shell:

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 #LIBRARIES:
 # Standard library
@@ -69,7 +69,7 @@ class TestAccuracy(unittest.TestCase):
         """ Compute the probability of x successes in n flips of a coin that produces
         a head with probability p (i.e. the probability density of a Binomial RV). """
         f = math.factorial
-        C = f(n) / (f(x) * f(n-x))
+        C = Decimal(f(n) / (f(x) * f(n-x)))
         return C * p**x * (1-p)**(n-x)
 
     def test_output_get_word(self):

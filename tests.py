@@ -10,7 +10,7 @@ import unittest
 from decimal import *
 
 # Local application
-import vose_sampler
+from vose_sampler import vose_sampler
 
 # Common paths and error messages
 valid_folder = "tests/file_examples/valid_files/"

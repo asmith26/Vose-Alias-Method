@@ -5,7 +5,7 @@ For example, this code can be used for creating and efficiently sampling from a 
 
 Unit tests can be run via:
 
-```$ python unit_tests.py```
+```$ python tests.py```
 
 
 ## <a name="depends-on">Depends on:</a>

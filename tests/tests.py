@@ -3,9 +3,7 @@
 #LIBRARIES:
 # Standard library
 import math
-import os
 import random
-import sys
 import unittest
 from decimal import *
 
@@ -131,9 +129,4 @@ class TestAccuracy(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # Run this script from the top level of the application (to correctly find test files)
-    if os.path.dirname(sys.argv[0]) != '':
-        os.chdir(os.path.dirname(sys.argv[0]))
-
-    # Run unittests
     unittest.main()

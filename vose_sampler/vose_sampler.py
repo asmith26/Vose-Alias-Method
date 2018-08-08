@@ -151,8 +151,7 @@ def handle_options():
     check_required_arguments(options, parser)
     return options
 
-
-if __name__ == "__main__":
+def main():
     # Handle command line arguments
     options = handle_options()
 
@@ -163,3 +162,6 @@ if __name__ == "__main__":
 
     # Sample n words
     VA_words.sample_n(options.n)
+
+if __name__ == "__main__":
+    main()

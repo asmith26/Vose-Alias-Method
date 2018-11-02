@@ -14,9 +14,9 @@ from vose_sampler import vose_sampler
 valid_folder = "tests/file_examples/valid_files/"
 invalid_folder = "tests/file_examples/invalid_files/"
 
-empty_file_error = "Error\: Please provide a file containing a corpus \(not an empty file\)."
-binary_file_error = "Error\: Please provide a file containing text-based data."
-nonnegative_integer_error = "Error\: Please enter a non-negative integer for the number of samples desired\: "
+empty_file_error = "Please provide a file containing a corpus \(not an empty file\)."
+binary_file_error = "Please provide a file containing text-based data."
+nonnegative_integer_error = "Please enter a non-negative integer for the number of samples desired\: "
 
 
 class TestValidation(unittest.TestCase):
@@ -25,23 +25,23 @@ class TestValidation(unittest.TestCase):
 
     def test_empty_file(self):
         """Test vose_sampler.get_words against empty files """
-        self.assertRaisesRegexp(SystemExit, empty_file_error, vose_sampler.get_words, invalid_folder + "empty.txt")
+        self.assertRaisesRegexp(IOError, empty_file_error, vose_sampler.get_words, invalid_folder + "empty.txt")
 
     def test_binary_file1(self):
         """Test vose_sampler.get_words against .epub files """
-        self.assertRaisesRegexp(SystemExit, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.epub")
+        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.epub")
 
     def test_binary_file2(self):
         """Test vose_sampler.get_words against .mobi files """
-        self.assertRaisesRegexp(SystemExit, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.mobi")
+        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.mobi")
 
     def test_binary_file3(self):
         """Test vose_sampler.get_words against .pdf files """
-        self.assertRaisesRegexp(SystemExit, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.pdf")
+        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.pdf")
 
     def test_binary_file4(self):
         """Test vose_sampler.get_words against .wav files """
-        self.assertRaisesRegexp(SystemExit, binary_file_error, vose_sampler.get_words, invalid_folder + "zero.wav")
+        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "zero.wav")
 
     def test_negative_integer(self):
         """Test vose_sampler.VoseAlias.alias_generation against a size
@@ -49,7 +49,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
+        self.assertRaisesRegexp(ValueError, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
 
     def test_zero_integer(self):
         """Test vose_sampler.ProbDistribution.alias_generation against a size
@@ -57,7 +57,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegexp(SystemExit, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
+        self.assertRaisesRegexp(ValueError, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
 
 
 class TestAccuracy(unittest.TestCase):
@@ -126,6 +126,14 @@ class TestAccuracy(unittest.TestCase):
         # Do not accept H_0 if p <= alpha
         alpha = 0.01
         self.assertGreater(p, alpha)
+
+    def test_roundtrip(self):
+        dist = {"H": Decimal(0.2), "T": Decimal(0.8)}
+        VA = vose_sampler.VoseAlias(dist)
+        sample = VA.sample_n(100000)
+        computed_dist = vose_sampler.sample2dist(sample)
+        self.assertAlmostEqual(dist.get("H"), computed_dist.get("H"), delta=0.01)
+        self.assertAlmostEqual(dist.get("T"), computed_dist.get("T"), delta=0.01)
 
 
 if __name__ == "__main__":

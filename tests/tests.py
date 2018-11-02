@@ -127,6 +127,14 @@ class TestAccuracy(unittest.TestCase):
         alpha = 0.01
         self.assertGreater(p, alpha)
 
+    def test_roundtrip(self):
+        dist = {"H": Decimal(0.2), "T": Decimal(0.8)}
+        VA = vose_sampler.VoseAlias(dist)
+        sample = VA.sample_n(100000)
+        computed_dist = vose_sampler.sample2dist(sample)
+        self.assertAlmostEqual(dist.get("H"), computed_dist.get("H"), delta=0.01)
+        self.assertAlmostEqual(dist.get("T"), computed_dist.get("T"), delta=0.01)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -78,7 +78,7 @@ class VoseAlias(object):
             return self.table_alias[col]
 
     def sample_n(self, size):
-        """ Retrun a sample of size n from the distribution, and print the results to stdout. """
+        """ Return a sample of size n from the distribution."""
         # Ensure a non-negative integer as been specified
         n = int(size)
         try:
@@ -87,35 +87,28 @@ class VoseAlias(object):
         except ValueError as ve:
             sys.exit("\nError: %s" % ve)
 
-        print("\nGenerating %d random samples:\n" % n)
-        for i in range(n):
-            print(self.alias_generation())
+        return [self.alias_generation() for i in range(n)]
 
 
 #HELPER FUNCTIONS
 def get_words(file):
     """ (str) -> list
     Return a list of words from a given corpus. """
+    # Ensure the file is not empty
+    if os.stat(file).st_size == 0:
+        raise IOError("Please provide a file containing a corpus (not an empty file).")
 
-    try:
-        # Ensure the file is not empty
-        if os.stat(file).st_size == 0:
-            raise IOError("Please provide a file containing a corpus (not an empty file).")
-
-        # Ensure the file is text based (not binary). This is based on the implementation
-        #  of the Linux file command
-        textchars = bytearray([7,8,9,10,12,13,27]) + bytearray(range(0x20, 0x100))
-        bin_file = open(file, "rb")
+    # Ensure the file is text based (not binary). This is based on the implementation
+    #  of the Linux file command
+    textchars = bytearray([7,8,9,10,12,13,27]) + bytearray(range(0x20, 0x100))
+    with open(file, "rb") as bin_file:
         if bool(bin_file.read(2048).translate(None, textchars)):
             raise IOError("Please provide a file containing text-based data.")
-        bin_file.close()
 
-        with open(file, "r") as corpus:
-            words = corpus.read().split()
-        return words
+    with open(file, "r") as corpus:
+        words = corpus.read().split()
+    return words
 
-    except IOError as ioe:
-        sys.exit("\nError: %s" % ioe)
 
 def sample2dist(sample):
     """ (list) -> dict (i.e {outcome:proportion})
@@ -144,7 +137,7 @@ def handle_options():
     parser = OptionParser()
     parser.add_option("-p", "--path", dest="path",
                       help="[REQUIRED] Path to corpus.", metavar="FILE")
-    parser.add_option("-n", "--num", dest="n",
+    parser.add_option("-n", "--num", dest="n", type=int,
                       help="[REQUIRED] Non-negative integer specifying how many samples are desired.", metavar="INT")
 
     (options, args) = parser.parse_args()
@@ -155,13 +148,20 @@ def main():
     # Handle command line arguments
     options = handle_options()
 
-    # Construct distribution
-    words = get_words(options.path)
-    word_dist = sample2dist(words)
-    VA_words = VoseAlias(word_dist)
+    try:
+        # Construct distribution
+        words = get_words(options.path)
+        word_dist = sample2dist(words)
+        VA_words = VoseAlias(word_dist)
 
-    # Sample n words
-    VA_words.sample_n(options.n)
+        # Sample n words
+        print("\nGenerating %d random samples:\n" % options.n)
+        sample = VA_words.sample_n(options.n)
+        for s in sample:
+            print(s)
+    except Exception as e:
+        sys.exit("\nError: %s" % e)
+
 
 if __name__ == "__main__":
     main()

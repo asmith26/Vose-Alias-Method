@@ -81,11 +81,8 @@ class VoseAlias(object):
         """ Return a sample of size n from the distribution."""
         # Ensure a non-negative integer as been specified
         n = int(size)
-        try:
-            if n <= 0:
-                raise ValueError("Please enter a non-negative integer for the number of samples desired: %d" % n)
-        except ValueError as ve:
-            sys.exit("\nError: %s" % ve)
+        if n <= 0:
+            raise ValueError("Please enter a non-negative integer for the number of samples desired: %d" % n)
 
         return [self.alias_generation() for i in range(n)]
 
@@ -94,6 +91,7 @@ class VoseAlias(object):
 def get_words(file):
     """ (str) -> list
     Return a list of words from a given corpus. """
+
     # Ensure the file is not empty
     if os.stat(file).st_size == 0:
         raise IOError("Please provide a file containing a corpus (not an empty file).")

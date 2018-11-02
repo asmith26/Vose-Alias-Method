@@ -25,23 +25,23 @@ class TestValidation(unittest.TestCase):
 
     def test_empty_file(self):
         """Test vose_sampler.get_words against empty files """
-        self.assertRaisesRegexp(IOError, empty_file_error, vose_sampler.get_words, invalid_folder + "empty.txt")
+        self.assertRaisesRegex(IOError, empty_file_error, vose_sampler.get_words, invalid_folder + "empty.txt")
 
     def test_binary_file1(self):
         """Test vose_sampler.get_words against .epub files """
-        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.epub")
+        self.assertRaisesRegex(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.epub")
 
     def test_binary_file2(self):
         """Test vose_sampler.get_words against .mobi files """
-        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.mobi")
+        self.assertRaisesRegex(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.mobi")
 
     def test_binary_file3(self):
         """Test vose_sampler.get_words against .pdf files """
-        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.pdf")
+        self.assertRaisesRegex(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "Alice.pdf")
 
     def test_binary_file4(self):
         """Test vose_sampler.get_words against .wav files """
-        self.assertRaisesRegexp(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "zero.wav")
+        self.assertRaisesRegex(IOError, binary_file_error, vose_sampler.get_words, invalid_folder + "zero.wav")
 
     def test_negative_integer(self):
         """Test vose_sampler.VoseAlias.alias_generation against a size
@@ -49,7 +49,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegexp(ValueError, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
+        self.assertRaisesRegex(ValueError, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
 
     def test_zero_integer(self):
         """Test vose_sampler.ProbDistribution.alias_generation against a size
@@ -57,7 +57,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegexp(ValueError, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
+        self.assertRaisesRegex(ValueError, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
 
 
 class TestAccuracy(unittest.TestCase):
@@ -74,7 +74,7 @@ class TestAccuracy(unittest.TestCase):
         """Test vose_sampler.get_words to ensure it correctly produces a list of
         words from a given corpus. """
         actual = vose_sampler.get_words(valid_folder + "single_word.txt")
-        expected = ["Speechmatics"]
+        expected = ["Alice"]
         self.assertEqual(actual, expected)
 
     def test_output_create_dist(self):

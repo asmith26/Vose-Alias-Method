@@ -120,7 +120,7 @@ def sample2dist(sample):
     return dist
 
 
-#COMMAND LINE HANDLING  (c.f. Speechmatics API)
+#COMMAND LINE HANDLING
 def check_required_arguments(opts, parser):
     missing_options = []
     for option in parser.option_list:

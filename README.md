@@ -3,6 +3,8 @@ Python implementation of Vose's alias method, an efficient algorithm for samplin
 
 For example, this code can be used for creating and efficiently sampling from a probability distribution representing rolling a weighted die (i.e where side j has probability P(j) of being rolled). Alternatively, it could be used for creating a simple [unigram language model](https://en.wikipedia.org/wiki/Language_model#Unigram_models) (see [example below](#unigram-usage))
 
+Any suggestions/contributions very welcome.
+
 ## Installation
 `$ pip install Vose-Alias-Method`
 

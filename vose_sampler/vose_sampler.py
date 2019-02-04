@@ -24,6 +24,7 @@ class VoseAlias(object):
         """ (VoseAlias, dict) -> NoneType """
         self.dist = dist
         self.alias_initialisation()
+        self.table_prob_list = list(self.table_prob)
 
     def alias_initialisation(self):
         """ Construct probability and alias tables for the distribution. """
@@ -69,7 +70,7 @@ class VoseAlias(object):
     def alias_generation(self):
         """ Return a random outcome from the distribution. """
         # Determine which column of table_prob to inspect
-        col = random.choice(list(self.table_prob))
+        col = random.choice(self.table_prob_list)
 
         # Determine which outcome to pick in that column
         if self.table_prob[col] >= random.uniform(0,1):

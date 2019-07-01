@@ -10,8 +10,8 @@ Any suggestions/contributions very welcome.
 
 
 ## Depends on:
-- The Python Standard Library, https://docs.python.org/2/library/
-- Python versions 2.7, 3.6 (tested on Python 2.7.11, 3.6.6)
+- The Python Standard Library, https://docs.python.org/2/library/, https://docs.python.org/3/library/
+- Python versions 2.7, 3.6 (and probably much more - tested on Python 2.7.11, 3.6.6)
 
 ## Example Usage
 In a python shell:

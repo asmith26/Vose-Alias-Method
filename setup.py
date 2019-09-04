@@ -22,13 +22,14 @@ def test_suite():
 
 setup(
     name='Vose-Alias-Method',
-    version='1.1.0',
+    version='1.1.1',
     description=('Python implementation of Vose\'s alias method, an efficient algorithm for sampling from a discrete probability distribution.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='asmith26',
     url='https://github.com/asmith26/Vose-Alias-Method.git',
     license='Apache-2.0',
+    data_files = [('', ['LICENSE'])],
     packages=['vose_sampler'],
     include_package_data=True,
     classifiers=[

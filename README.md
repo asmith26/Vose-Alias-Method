@@ -8,6 +8,8 @@ Any suggestions/contributions very welcome.
 ## Installation
 `$ pip install Vose-Alias-Method`
 
+Or via conda: `$ conda install -c conda-forge vose-alias-method`
+
 
 ## Depends on:
 - The Python Standard Library, https://docs.python.org/2/library/, https://docs.python.org/3/library/

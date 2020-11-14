@@ -18,7 +18,7 @@ Or via conda: `$ conda install -c conda-forge vose-alias-method`
 ## Example Usage
 In a python shell:
 
-```
+```python
 >>> from vose_sampler import VoseAlias
 >>> # Create the required probability distribution (here we use the example of a weighted coin with probability H:=Heads=0.2 and T:=Tail=0.8)
 >>> dist = {"H":0.2, "T":0.8}

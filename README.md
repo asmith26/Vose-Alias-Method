@@ -78,4 +78,4 @@ password = some_harder_password
 ```
 
 - Assuming everything looks good `$ twine upload dist/*`
-- Create new git release `$ git tag <tagname>`, and [create a new release](https://github.com/asmith26/Vose-Alias-Method/releases/new) with the same `<tagname>`.
+- Create new git release `$ git tag <tagname> && git push origin <tag_name>`, and [create a new release](https://github.com/asmith26/Vose-Alias-Method/releases/new) with the same `<tagname>`.

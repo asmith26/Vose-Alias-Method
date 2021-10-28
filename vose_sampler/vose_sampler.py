@@ -32,15 +32,14 @@ class VoseAlias(object):
         n = len(self.dist)
         self.table_prob = {}   # probability table
         self.table_alias = {}  # alias table
-        scaled_prob = {}       # scaled probabilities
         small = []             # stack for probabilities smaller that 1
         large = []             # stack for probabilities greater than or equal to 1
 
         # Construct and sort the scaled probabilities into their appropriate stacks
         for o, p in self.dist.items():
-            scaled_prob[o] = Decimal(p) * n
+            self.table_prob[o] = Decimal(p) * n
 
-            if scaled_prob[o] < 1:
+            if self.table_prob[o] < 1:
                 small.append(o)
             else:
                 large.append(o)
@@ -50,12 +49,11 @@ class VoseAlias(object):
             s = small.pop()
             l = large.pop()
 
-            self.table_prob[s] = scaled_prob[s]
             self.table_alias[s] = l
 
-            scaled_prob[l] = (scaled_prob[l] + scaled_prob[s]) - Decimal(1)
+            self.table_prob[l] = (self.table_prob[l] + self.table_prob[s]) - Decimal(1)
 
-            if scaled_prob[l] < 1:
+            if self.table_prob[l] < 1:
                 small.append(l)
             else:
                 large.append(l)

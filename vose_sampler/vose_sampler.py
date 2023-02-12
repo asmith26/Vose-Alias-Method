@@ -71,7 +71,7 @@ class VoseAlias(object):
         col = random.choice(self.table_prob_list)
 
         # Determine which outcome to pick in that column
-        if self.table_prob[col] >= random.uniform(0,1):
+        if self.table_prob[col] >= random.random():
             return col
         else:
             return self.table_alias[col]

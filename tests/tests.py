@@ -16,7 +16,7 @@ invalid_folder = "tests/file_examples/invalid_files/"
 
 empty_file_error = "Please provide a file containing a corpus \(not an empty file\)."
 binary_file_error = "Please provide a file containing text-based data."
-nonnegative_integer_error = "Please enter a non-negative integer for the number of samples desired\: "
+negative_integer_error = "Please enter a non-negative integer for the number of samples desired. size="
 
 
 class TestValidation(unittest.TestCase):
@@ -49,7 +49,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegex(ValueError, nonnegative_integer_error + "-1",  VA_words.sample_n, -1)
+        self.assertRaisesRegex(ValueError, negative_integer_error + "-1", VA_words.sample_n, -1)
 
     def test_zero_integer(self):
         """Test vose_sampler.ProbDistribution.alias_generation against a size
@@ -57,7 +57,7 @@ class TestValidation(unittest.TestCase):
         words = vose_sampler.get_words(valid_folder + "small.txt")
         word_dist = vose_sampler.sample2dist(words)
         VA_words = vose_sampler.VoseAlias(word_dist)
-        self.assertRaisesRegex(ValueError, nonnegative_integer_error + "0",  VA_words.sample_n, 0)
+        self.assertEqual([], VA_words.sample_n(size=0))
 
 
 class TestAccuracy(unittest.TestCase):

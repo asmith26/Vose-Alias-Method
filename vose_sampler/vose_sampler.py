@@ -81,8 +81,8 @@ class VoseAlias(object):
         """ Return a sample of size n from the distribution."""
         # Ensure a non-negative integer as been specified
         n = int(size)
-        if n <= 0:
-            raise ValueError("Please enter a non-negative integer for the number of samples desired: %d" % n)
+        if n < 0:
+            raise ValueError(f"Please enter a non-negative integer for the number of samples desired. size={n}")
 
         return [self.alias_generation() for i in range(n)]
 

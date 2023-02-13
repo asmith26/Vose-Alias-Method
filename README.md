@@ -12,8 +12,7 @@ Or via conda: `$ conda install -c conda-forge vose-alias-method`
 
 
 ## Depends on:
-- The Python Standard Library, https://docs.python.org/2/library/, https://docs.python.org/3/library/
-- Python versions 2.7, 3.6 (and probably much more - tested on Python 2.7.11, 3.6.6)
+- The Python Standard Library https://docs.python.org/3/library/)
 
 ## Example Usage
 In a python shell:
@@ -49,9 +48,7 @@ thing
 solemn
 ```
 
-[Note, this is intended to illustrate how Vose's alias method could be used. Thus I have not included any preprocessing steps that would make the language model more realistic; for example, we could add handling of upper vs. lower case words (so that e.g. "The" and "the" are not considered distinct), as well as handling of punctuation (e.g. so "the" and "the." are considered the same).
-
-Likewise, should the text(s) you wish to sample from be particularly large, you may wish to integrate my [Hadoop MapReduce job for counting the word frequencies of text file(s)](https://github.com/asmith26/python-mapreduce-examples/tree/master/word_frequencies).]
+[Note, this is intended to illustrate how Vose's alias method could be used. Thus I have not included any preprocessing steps that would make the language model more realistic; for example, we could add handling of upper vs. lower case words (so that e.g. "The" and "the" are not considered distinct), as well as handling of punctuation (e.g. so "the" and "the." are considered the same).]
 
 
 ## Tests

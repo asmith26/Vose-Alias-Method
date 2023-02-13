@@ -22,7 +22,7 @@ def test_suite():
 
 setup(
     name='Vose-Alias-Method',
-    version='1.1.2',
+    version='1.2.0',
     description=('Python implementation of Vose\'s alias method, an efficient algorithm for sampling from a discrete probability distribution.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -35,7 +35,6 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6'
     ],
     entry_points={

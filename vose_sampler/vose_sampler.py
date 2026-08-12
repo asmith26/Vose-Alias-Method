@@ -22,6 +22,8 @@ class VoseAlias(object):
 
     def __init__(self, dist, rng=None):
         """ (VoseAlias, dict[, RNG]) -> NoneType """
+        if sum(dist.values()) != 1:
+            raise ValueError("Probability distribution must sum to 1.")
         self.dist = dist
         self.rng = rng or random.Random()
         self.alias_initialisation()

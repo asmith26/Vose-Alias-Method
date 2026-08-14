@@ -1,0 +1,74 @@
+name: Publish Python Package to PyPI
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v7
+
+    - name: Setup uv
+      uses: astral-sh/setup-uv
+
+    - name: Get version from pyproject.toml
+      id: get-version
+      run: |
+        VERSION=$(python setup.py --version)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Found version: $VERSION"
+
+    - name: Build package
+      run: uv build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: python-package-distributions
+        path: dist/
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v7
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v8
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Create GitHub Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release create "v${{ needs.build.outputs.version }}" \
+          --title "Release v${{ needs.build.outputs.version }}" \
+          --draft=false \
+          --prerelease=false
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build, create-release]
+    permissions:
+      # IMPORTANT: this permission is mandatory for Trusted Publishing
+      id-token: write
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v8
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

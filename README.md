@@ -55,6 +55,10 @@ solemn
 Run via: `$ python setup.py test` (or `$ python tests/tests.py`)
 
 ## Build
+A GitHub Action exists for this at: [.github/workflows/publish.yaml](.github/workflows/publish.yaml)
+
+Alternatively build and publish manually with:
+
 - `$ python setup.py sdist bdist_wheel`
 - `$ twine upload dist/* -r testpypi --skip-existing` assuming twine is installed and *~/.pypirc* exists with something like:
 ```
